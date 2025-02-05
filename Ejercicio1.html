@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador con JavaScript</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="contador">0</h1>
+    <button onclick="aumentarContador()">Aumentar</button>
+    <button onclick="disminuirContador()">Disminuir</button>
+    <button onclick="reseatearContador()">Resetear</button>
+
+    <div class="text-center mt-3">
+        <a href="index.html" class="btn btn-secondary">Volver al Inicio</a>
+    </div>
+    
+    <script>
+        let contador = 0;
+        const mostrarContador = document.getElementById('contador');
+
+        function aumentarContador() {
+            if (contador < 10) {
+                contador++;
+                mostrarContador.textContent = contador;
+            } else {
+                alert('No puede ser mayor de 10');
+            }
+        }
+
+        function disminuirContador() {
+            if (contador > 0) {
+                contador--;
+                mostrarContador.textContent = contador;
+            } else {
+                alert('No puede ser menor de 0');
+            }
+        }
+
+        function reseatearContador() {
+            contador=0;
+            mostrarContador.textContent = contador;
+        }
+    </script>
+</body>
+</html>

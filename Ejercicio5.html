@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Libros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .book-list {
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: left;
+        }
+        .book-item {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gestor de Libros</h1>
+    <input type="text" id="book-title" placeholder="Título del libro">
+    <button id="add-book">Agregar Libro</button>
+    
+    <h2>Lista de Libros</h2>
+    <div class="book-list" id="book-list"></div>
+
+    <div class="text-center mt-3">
+        <a href="index.html" class="btn btn-secondary">Volver al Inicio</a>
+    </div>
+    
+    <script>
+        const API_URL = "https://crudcrud.com/api/b8a8b0b0c4e04dbba071133ac9fe67bd/libros"; // He tenido que meterme en la página en modo incógnito ya que si no 
+        // me seguía apareciendo la API vieja.
+
+        async function fetchBooks() {
+            let response = await fetch(API_URL);
+            let books = await response.json();
+            displayBooks(books);
+        }
+
+        async function addBook() {
+            let title = document.getElementById("book-title").value;
+            if (title === "") {
+                alert("Escribe un título");
+                return;
+            }
+
+            let newBook = { title, completed: false };
+            let response = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newBook)
+            });
+
+            if (response.ok) {
+                document.getElementById("book-title").value = "";
+                fetchBooks(); 
+            } else {
+                alert("Error al agregar el libro");
+            }
+        }
+
+        async function deleteBook(id) {
+            let response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+            if (response.ok) {
+                fetchBooks();
+            } else {
+                alert("Error al eliminar el libro");
+            }
+        }
+
+        async function toggleCompleted(id, title, completed) {
+            let updatedBook = { title, completed: !completed };
+
+            let response = await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedBook)
+            });
+
+            if (response.ok) {
+                fetchBooks();
+            } else {
+                alert("Error al actualizar el libro");
+            }
+        }
+
+        function displayBooks(books) {
+            let bookList = document.getElementById("book-list");
+            bookList.innerHTML = "";
+            books.forEach(book => {
+                let bookDiv = document.createElement("div");
+                bookDiv.className = "book-item";
+                bookDiv.innerHTML = `
+                    <span>${book.title} - ${book.completed ? "✅ Leído" : "❌ No leído"}</span>
+                    <button onclick="toggleCompleted('${book._id}', '${book.title}', ${book.completed})">✔</button>
+                    <button onclick="deleteBook('${book._id}')">🗑</button>
+                `;
+                bookList.appendChild(bookDiv);
+            });
+        }
+
+        document.getElementById("add-book").addEventListener("click", addBook);
+        fetchBooks(); 
+    </script>
+
+</body>
+</html>
