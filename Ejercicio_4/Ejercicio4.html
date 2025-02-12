@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego del Ahorcado</title>
+    <link rel="stylesheet" href="ejercicio4.css">
+</head>
+<body>
+
+    <h1>Juego del Ahorcado</h1>
+    <img id="hangman-img" src="hangman0.png" alt="Ahorcado">
+    <p id="message">Cargando palabra...</p>
+    <p class="hidden-word" id="hidden-word">_ _ _ _ _</p>
+    
+    <input type="text" id="letter-input" class="letter-input" maxlength="1">
+    <button id="guess-btn">Adivinar</button>
+    <button id="restart-btn">Reiniciar</button>
+
+    <p>Intentos restantes: <span id="attempts">6</span></p>
+
+    <script src="ejercicio4.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 20px;
+}
+
+.hidden-word {
+    font-size: 24px;
+    letter-spacing: 5px;
+    margin: 20px 0;
+}
+
+.letter-input {
+    font-size: 20px;
+    padding: 5px;
+    text-transform: uppercase;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #218838;
+}
+
+#hangman-img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+
